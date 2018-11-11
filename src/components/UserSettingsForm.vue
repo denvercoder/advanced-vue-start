@@ -3,13 +3,20 @@
     <h1 class="text-2xl font-bold mb-6">Your Settings</h1>
     <label class="block mb-6">
       <span class="form-label mb-2">Email Address</span>
-      <input v-model="email" class="form-input" placeholder="you@example.com">
+      <input v-model="email" class="form-input" placeholder="you@example.com" />
     </label>
     <div class="mb-8">
       <span class="form-label mb-2">Newsletter</span>
       <div class="flex justify-between items-center">
         <p class="mr-4">Send you occasional news and updates.</p>
-        <toggle-input v-model="receiveNewsletter"></toggle-input>
+        <span
+          class="toggle flex-no-shrink"
+          role="checkbox"
+          tabindex="0"
+          @click="toggleNewsLetter"
+          @keydown.space.prevent="toggleNewsLetter"
+          :aria-checked="receiveNewsletter.toString()"
+        ></span>
       </div>
     </div>
     <div class="text-right">
@@ -19,12 +26,7 @@
 </template>
 
 <script>
-import ToggleInput from "./ToggleInput.vue"
-
 export default {
-  components: {
-    ToggleInput
-  },
   data() {
     return {
       email: "jane@example.com",
@@ -37,6 +39,9 @@ export default {
         email: this.email,
         receiveNewsletter: this.receiveNewsletter
       })
+    },
+    toggleNewsLetter() {
+      this.receiveNewsletter = !this.receiveNewsletter
     }
   }
 }
